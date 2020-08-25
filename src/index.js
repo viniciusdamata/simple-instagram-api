@@ -5,12 +5,14 @@ const cors = require("cors");
 const http = require("http");
 const path = require("path");
 
-const router = require("./routes/post.routes");
+const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 const PORT = process.env.PORT || 3333;
+const URI = process.env.MONGO_DB_URI || "";
+
+const router = require("./routes/post.routes");
 const app = express();
-app.use(cors({ origin: "*" }));
-const URI =
-  "mongodb+srv://usuario:vinicius123@cluster0-4ixoe.mongodb.net/test?retryWrites=true&w=majority";
+app.use(cors({ origin: CORS_ORIGIN }));
+
 
 const server = http.Server(app);
 const io = require("socket.io")(server);

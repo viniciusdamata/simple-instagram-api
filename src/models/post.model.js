@@ -10,8 +10,8 @@ const postSchema = new mongoose.Schema(
     likes: {
       required: true,
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   { timestamps: true }
 );

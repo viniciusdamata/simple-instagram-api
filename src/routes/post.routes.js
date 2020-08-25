@@ -2,7 +2,12 @@ const express = require("express");
 
 const uploadImgur = require("../config/upload.config.imgur");
 const uploadLocal = require("../config/upload.config.local");
-const { index, store, like, storeImgur } = require("../controllers/post.controller");
+const {
+  index,
+  store,
+  like,
+  storeImgur,
+} = require("../controllers/post.controller");
 
 const router = express.Router();
 
