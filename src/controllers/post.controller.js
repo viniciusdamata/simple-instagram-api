@@ -2,6 +2,7 @@ const Post = require("../models/post.model");
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
+const imgurService = require("../services/imgur.service");
 
 module.exports = {
   async index(req, res) {
@@ -37,12 +38,21 @@ module.exports = {
     try {
       const { author, place, description, hashtags } = req.body;
       const { filename: image } = req.file;
-      const imageURL = `${process.env.BASE_URL}/files/${image}`;
+      let imageURL = `${process.env.BASE_URL}/files/${image}`;
 
       await sharp(req.file.path)
         .resize(500)
         .jpeg({ quality: 70 })
         .toFile(path.resolve(req.file.destination, "resized", image));
+
+      if (process.env.ENV == "PROD") {
+        const responseImageCreated = await imgurService.createImgurPost(
+          path.resolve(req.file.destination, "resized", image)
+        );
+        fs.unlinkSync(path.resolve(req.file.destination, "resized", image));
+        const link = responseImageCreated.data.link;
+        imageURL = link;
+      }
 
       fs.unlinkSync(req.file.path);
 

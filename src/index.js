@@ -11,8 +11,9 @@ const URI = process.env.MONGO_DB_URI || "";
 
 const router = require("./routes/post.routes");
 const app = express();
-app.use(cors({ origin: CORS_ORIGIN }));
 
+app.use(express.static(path.resolve(__dirname, "..", "public")));
+app.use(cors({ origin: CORS_ORIGIN }));
 
 const server = http.Server(app);
 const io = require("socket.io")(server);
@@ -43,11 +44,12 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Pagina Inicial");
-  console.log(req.io);
+server.listen(PORT, () => {
+  console.log(
+    `[index] Servidor rodando na porta ${PORT}\n[ENV] ${process.env.ENV}`
+  );
 });
 
-server.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
