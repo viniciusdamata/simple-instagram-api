@@ -1,8 +1,7 @@
 const Post = require("../models/post.model");
 const sharp = require("sharp");
-const path = require("path");
-const fs = require("fs");
 const imgurService = require("../services/imgur.service");
+const sharpService = require("../services/sharp.service");
 
 module.exports = {
   async index(req, res) {
@@ -38,18 +37,20 @@ module.exports = {
     try {
       const { author, place, description, hashtags } = req.body;
       const { originalname: image } = req.file;
-      let imageURL = `${process.env.BASE_URL}/files/${image}`;
-      const imageResized = await sharp(req.file.buffer)
-        .resize(500)
-        .jpeg({ quality: 70 })
-        .toBuffer();
-
+      
+      let imageURL = "";
       if (process.env.ENV == "PROD") {
-        const responseImageCreated = await imgurService.createImgurPost(
-          imageResized
+        const resizedImage = await sharpService.resizeImageToBuffer(
+          req.file.buffer
         );
-        const link = responseImageCreated.data.link;
+        const imageCreatedImgur = await imgurService.createImgurPost(
+          resizedImage
+        );
+        const link = imageCreatedImgur.data.link;
         imageURL = link;
+      } else if (process.env.ENV == "DEV") {
+        sharpService.resizeImageToFile(req.file);
+        imageURL = `${process.env.BASE_URL}/files/${image}`;
       }
 
       const post = new Post({
@@ -75,14 +76,6 @@ module.exports = {
       req.io.emit("like", post);
       await Post.updateOne({ _id }, post);
       res.status(200).json({ like: post });
-      console.log("store -> imageResized", imageResized)
-      console.log("store -> imageResized", imageResized)
-      console.log("store -> imageResized", imageResized)
-      console.log("store -> imageResized", imageResized)
-      console.log("store -> imageResized", imageResized);
-      console.log("store -> imageResized", imageResized);
-      console.log("store -> imageResized", imageResized);
-      console.log("store -> imageResized", imageResized);
     } catch (err) {
       res.status(404).json(err.message);
     }
