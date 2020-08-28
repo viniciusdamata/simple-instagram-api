@@ -37,24 +37,20 @@ module.exports = {
   async store(req, res) {
     try {
       const { author, place, description, hashtags } = req.body;
-      const { filename: image } = req.file;
+      const { originalname: image } = req.file;
       let imageURL = `${process.env.BASE_URL}/files/${image}`;
-
-      await sharp(req.file.path)
+      const imageResized = await sharp(req.file.buffer)
         .resize(500)
         .jpeg({ quality: 70 })
-        .toFile(path.resolve(req.file.destination, "resized", image));
+        .toBuffer();
 
       if (process.env.ENV == "PROD") {
         const responseImageCreated = await imgurService.createImgurPost(
-          path.resolve(req.file.destination, "resized", image)
+          imageResized
         );
-        fs.unlinkSync(path.resolve(req.file.destination, "resized", image));
         const link = responseImageCreated.data.link;
         imageURL = link;
       }
-
-      fs.unlinkSync(req.file.path);
 
       const post = new Post({
         author,
@@ -79,6 +75,14 @@ module.exports = {
       req.io.emit("like", post);
       await Post.updateOne({ _id }, post);
       res.status(200).json({ like: post });
+      console.log("store -> imageResized", imageResized)
+      console.log("store -> imageResized", imageResized)
+      console.log("store -> imageResized", imageResized)
+      console.log("store -> imageResized", imageResized)
+      console.log("store -> imageResized", imageResized);
+      console.log("store -> imageResized", imageResized);
+      console.log("store -> imageResized", imageResized);
+      console.log("store -> imageResized", imageResized);
     } catch (err) {
       res.status(404).json(err.message);
     }
