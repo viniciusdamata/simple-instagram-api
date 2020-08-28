@@ -5,12 +5,12 @@ const FormData = require("form-data");
 module.exports = {
   /**
    *
-   * @param {BinaryType} image
+   * @param {String} path
    */
 
   async createImgurPost(path) {
     try {
-      const image = this.readImageSync(path);
+      const image = fs.readFileSync(path);
       const form = new FormData();
       form.append("image", image);
 
@@ -24,10 +24,5 @@ module.exports = {
     } catch (error) {
       return error;
     }
-  },
-
-  readImageSync(path) {
-    const image = fs.readFileSync(path);
-    return image;
   },
 };
