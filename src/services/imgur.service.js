@@ -21,8 +21,7 @@ module.exports = {
       });
       return response.data;
     } catch (error) {
-      console.log("createImgurPost -> error", error)
-      return error;
+      throw new Error(`[imgur.service] ${error.message}`);
     }
   },
 };

@@ -1,5 +1,5 @@
 const Post = require("../models/post.model");
-const sharp = require("sharp");
+
 const imgurService = require("../services/imgur.service");
 const sharpService = require("../services/sharp.service");
 
@@ -12,45 +12,24 @@ module.exports = {
       res.status(404).json({ error: err.message });
     }
   },
-  async storeImgur(req, res) {
-    try {
-      const { author, place, description, hashtags } = req.body;
-      const { link: image } = req.file.data;
-
-      const post = new Post({
-        author,
-        place,
-        description,
-        hashtags,
-        image,
-      });
-
-      const response = await post.save();
-      req.io.emit("post", post);
-      res.status(201).json({ criado: response });
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-  },
 
   async store(req, res) {
     try {
       const { author, place, description, hashtags } = req.body;
-      const { originalname: image } = req.file;
-      
-      let imageURL = "";
+
+      let image = "";
       if (process.env.ENV == "PROD") {
-        const resizedImage = await sharpService.resizeImageToBuffer(
-          req.file.buffer
-        );
+        const { buffer } = req.file;
+        const resizedImage = await sharpService.resizeImageToBuffer(buffer);
         const imageCreatedImgur = await imgurService.createImgurPost(
           resizedImage
         );
         const link = imageCreatedImgur.data.link;
-        imageURL = link;
+        image = link;
       } else if (process.env.ENV == "DEV") {
-        sharpService.resizeImageToFile(req.file);
-        imageURL = `${process.env.BASE_URL}/files/${image}`;
+        const { originalname, buffer } = req.file;
+        sharpService.resizeImageToFile({ originalname, buffer });
+        image = `${process.env.BASE_URL}/files/${originalname}`;
       }
 
       const post = new Post({
@@ -58,7 +37,7 @@ module.exports = {
         place,
         description,
         hashtags,
-        image: imageURL,
+        image,
       });
 
       const response = await post.save();

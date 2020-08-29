@@ -10,8 +10,7 @@ module.exports = {
 
     return imageResized;
   },
-  async resizeImageToFile(image) {
-    const { buffer, originalname } = image;
+  async resizeImageToFile({ buffer, originalname }) {
     await sharp(buffer)
       .resize(500)
       .jpeg({ quality: 70 })
