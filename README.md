@@ -1,33 +1,48 @@
-### Api simples inspirada no funcionamento do Instagram
+# Simple api inspired by Instagram
 
-#### Features
+[Versao em pt-BR](./README_PT_BR.md)
 
-- upload de imagens localmente e no imgur
-- criação de posts
-- listagem de posts
-- função de like nos posts
+[Production version](http://instagrao.herokuapp.com/)
 
-#### Stack utilizada
+[Frontend repository](https://github.com/viniciusdamata/simple-instagram-frontend.git)
+
+#### :pencil: Description
+
+An api made using the MERN stack, which simulates the functioning of Instagram with file uploads and integration with imgur.
+
+#### :page_facing_up: Features
+
+- image upload local and on imgur
+- posts creation
+- posts list
+- posts like
+
+#### :computer: Utilized Stack
 
 - express.js
-- banco de dados não relacional mongoDB com framework mongoose
+- non relational database mongoDB with mongoose framework and express.js
 
-#### Como utilizar?
+#### :question: ​How to use?
 
-1.  Crie os arquivos `.env.development` e `.env.production` com as variaveis necessárias utilizando o arquivo de exemplo `.env.example`;
-2.  rode o comando `yarn dev` para ambiente de desenvolvimento e `yarn prod` para produção.
+1.  Create the files `.env.development` and `.env.production` with the needed variables using the example file `.env.example`
+2.  Run `yarn install` or just `yarn` for dependencies installation
+3.  Run the command `yarn dev` for development environment and `yarn prod` for production.
 
-#### Rotas
+#### :+1: How to contribute?
 
-​ `POST localhost:3333/posts `
+To contribute with this project create a pull request or an issue and i'l be glad to take a look at them
+
+#### :blue_book:API Routes
+
+`POST localhost:3333/posts `
 
 ```javascript
 var form = new FormData();
-form.append("author", "Autor teste");
-form.append("place", "Localização de teste");
-form.append("description", "Teste");
-form.append("hashtags", "#teste #teste");
-form.append("image", "arquivo binario da imagem aqui");
+form.append("author", "test author");
+form.append("place", "test location");
+form.append("description", "Test");
+form.append("hashtags", "#test #test");
+form.append("image", "image binary here");
 
 fetch("http://localhost:3333/posts/", {
   method: "POST",
@@ -43,7 +58,7 @@ fetch("http://localhost:3333/posts/", {
   });
 ```
 
-​ `GET localhost:3333/posts `
+`GET localhost:3333/posts `
 
 ```javascript
 fetch("http://localhost:3333/posts", {
@@ -64,7 +79,7 @@ fetch("http://localhost:3333/posts", {
 `PUT LIKE localhost:3333/posts/${id}/like`
 
 ```javascript
-const id = "id do post aqui";
+const id = "id of the post here";
 fetch(`http://localhost:3333/posts/${id}/like`, {
   method: "PUT",
   headers: {},
