@@ -5,7 +5,7 @@ const FormData = require("form-data");
 module.exports = {
   /**
    *
-   * @param {BinaryType} image
+   * @param {Buffer} image
    */
 
   async createImgurPost(image) {

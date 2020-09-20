@@ -1,9 +1,11 @@
 const Post = require("../models/post.model");
-
-const imgurService = require("../services/imgur.service");
-const sharpService = require("../services/sharp.service");
+const imageService = require("../services/image.service");
 
 module.exports = {
+  /**
+   * @param {import("express").Request} req
+   * @param {import("express").Response} res
+   */
   async index(req, res) {
     try {
       const posts = await Post.find({}).sort("-createdAt");
@@ -12,27 +14,17 @@ module.exports = {
       res.status(404).json({ error: err.message });
     }
   },
-
+  /**
+   * @param {import("express").Request} req
+   * @param {import("express").Response} res
+   */
   async store(req, res) {
     try {
       const { author, place, description, hashtags } = req.body;
 
-      let image = "";
-      if (process.env.ENV == "PROD") {
-        const { buffer } = req.file;
-        const resizedImage = await sharpService.resizeImageToBuffer(buffer);
-        const imageCreatedImgur = await imgurService.createImgurPost(
-          resizedImage
-        );
-        const link = imageCreatedImgur.data.link;
-        image = link;
-      } else if (process.env.ENV == "DEV") {
-        const { originalname, buffer } = req.file;
-        sharpService.resizeImageToFile({ originalname, buffer });
-        image = `${process.env.BASE_URL}/files/${originalname}`;
-      }
+      const image = await imageService.uploadImage(req.file);
 
-      const post = new Post({
+      const post = await Post.create({
         author,
         place,
         description,
@@ -40,13 +32,16 @@ module.exports = {
         image,
       });
 
-      const response = await post.save();
       req.io.emit("post", post);
-      res.status(201).json({ criado: response });
+      res.status(201).json({ criado: post });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
   },
+  /**
+   * @param {import("express").Request} req
+   * @param {import("express").Response} res
+   */
   async like(req, res) {
     try {
       const _id = req.params.id;

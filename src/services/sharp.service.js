@@ -2,6 +2,11 @@ const sharp = require("sharp");
 const path = require("path");
 
 module.exports = {
+  /**
+   * 
+   * @param {Buffer} image 
+   * @returns {Promise<Buffer>}
+   */
   async resizeImageToBuffer(image) {
     const imageResized = await sharp(image)
       .resize(500)
@@ -10,6 +15,11 @@ module.exports = {
 
     return imageResized;
   },
+  /**
+   *
+   * @param {{buffer:Buffer, originalname:String}}
+   * @returns {void}
+   */
   async resizeImageToFile({ buffer, originalname }) {
     await sharp(buffer)
       .resize(500)
