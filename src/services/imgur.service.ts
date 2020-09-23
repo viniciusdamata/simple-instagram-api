@@ -1,14 +1,15 @@
-const fs = require("fs");
-const api = require("../config/axios.config");
-const FormData = require("form-data");
+import api from "../config/axios.config";
+import FormData from "form-data";
+import { AxiosResponse } from "axios";
+// const FormData = require("form-data");
 
-module.exports = {
-  /**
-   *
-   * @param {Buffer} image
-   */
+/**
+ *
+ * @param {Buffer} image
+ */
 
-  async createImgurPost(image) {
+class ImgurService {
+  async createImgurPost(image: Buffer): Promise<AxiosResponse<any>["data"]> {
     try {
       const form = new FormData();
       form.append("image", image);
@@ -23,5 +24,6 @@ module.exports = {
     } catch (error) {
       throw new Error(`[imgur.service] ${error.message}`);
     }
-  },
-};
+  }
+}
+export default new ImgurService();

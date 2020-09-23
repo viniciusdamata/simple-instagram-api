@@ -32,6 +32,15 @@ An api made using the MERN stack, which simulates the functioning of Instagram w
 
 To contribute with this project create a pull request or an issue and i'l be glad to take a look at them
 
+#### Roadmap
+- [x] convert all the api to TS
+- [ ] create dev server nodemon like command
+- [ ] to implement [OvernightJS](https://github.com/seanpmaxwell/overnight)
+- [ ] remove tslint and change to eslint because tslint is deprecated
+- [ ] add websocket again
+
+
+
 #### :blue_book:API Routes
 
 `POST localhost:3333/posts `
