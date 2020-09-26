@@ -1,5 +1,5 @@
 import Post, { PostModel } from "../models/Post";
-import * as imageService from "../services/image.service";
+import  imageService from "../services/uploadImageService/index";
 import { Request, Response } from "express";
 
 class PostController {
@@ -17,7 +17,7 @@ class PostController {
     try {
       const { author, place, description, hashtags } = req.body;
 
-      const image = await imageService.uploadImage(req.file);
+      const image = await imageService.resizeImageAndUpload(req.file);
 
       const post = await Post.create({
         author,
@@ -41,7 +41,7 @@ class PostController {
       post.likes = post.likes += 1;
       // req.io.emit("like", post);
       await Post.updateOne({ _id }, post);
-      res.status(200).json({ like: post });
+      res.status(200).json({ liked: post });
     } catch (err) {
       res.status(404).json(err.message);
     }

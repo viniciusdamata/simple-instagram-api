@@ -1,6 +1,6 @@
 import sharp from "sharp";
 import path from "path";
-import { MulterFileInterface } from "../interfaces/MulterFileInterface";
+import { MulterFileInterface } from "../../interfaces/MulterFileInterface";
 
 class SharpService {
   async resizeImageToBuffer(image: Buffer): Promise<Buffer> {
@@ -18,9 +18,9 @@ class SharpService {
       .resize(500)
       .jpeg({ quality: 70 })
       .toFile(
-        path.resolve(__dirname, "..", "..", "uploads", "resized", originalname)
+        path.resolve(__dirname, "..", "..", "..", "uploads", "resized", originalname)
       );
   }
 }
 
-export default new SharpService();
+export default SharpService;

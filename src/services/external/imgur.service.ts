@@ -1,7 +1,6 @@
-import api from "../config/axios.config";
+import api from "../../config/axios.config";
 import FormData from "form-data";
 import { AxiosResponse } from "axios";
-// const FormData = require("form-data");
 
 /**
  *
@@ -22,8 +21,8 @@ class ImgurService {
       });
       return response.data;
     } catch (error) {
-      throw new Error(`[imgur.service] ${error.message}`);
+      console.error(`[imgur.service] ${error.message}`);
     }
   }
 }
-export default new ImgurService();
+export default ImgurService;

@@ -34,10 +34,12 @@ To contribute with this project create a pull request or an issue and i'l be gla
 
 #### Roadmap
 - [x] convert all the api to TS
-- [ ] create dev server nodemon like command
+- [x] create dev server nodemon like command
 - [ ] implement [OvernightJS](https://github.com/seanpmaxwell/overnight) to use ts decorators
 - [ ] remove tslint and change to eslint because tslint is deprecated
 - [ ] add websocket again
+- [ ] configure module alias
+- [ ] implement tests
 
 
 
