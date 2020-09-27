@@ -1,9 +1,9 @@
-import Post, { PostModel } from "../models/Post";
+import Post from "../models/Post";
 import  imageService from "../services/uploadImageService/index";
 import { Request, Response } from "express";
 
 class PostController {
-  async index(req: Request, res: Response) {
+  async index(req: Request, res: Response): Promise<void>  {
     try {
       const { query } = req;
       const posts = await Post.find({ ...query }).sort("-createdAt");
@@ -13,7 +13,7 @@ class PostController {
     }
   }
 
-  async store(req: Request, res: Response) {
+  async store(req: Request, res: Response): Promise<void>  {
     try {
       const { author, place, description, hashtags } = req.body;
 

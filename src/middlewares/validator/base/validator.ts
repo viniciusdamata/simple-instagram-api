@@ -8,7 +8,7 @@ class Validator<T> {
     this.entity = entity;
   }
 
-  validate = (req: Request, res: Response, next: () => void) => {
+  validate = (req: Request, res: Response, next: () => void):void => {
     const errors = [];
 
     if (!req.body) {
@@ -16,6 +16,7 @@ class Validator<T> {
     } else {
       const { body } = req;
       for (const key in this.entity) {
+        // eslint-disable-next-line no-prototype-builtins
         if (this.entity.hasOwnProperty(key)) {
           const element: unknown = this.entity[key];
           if (!body[key]) {
