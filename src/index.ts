@@ -4,6 +4,9 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import http from "http";
 import path from "path";
+import io from "socket.io";
+
+import "./config/env.config";
 
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 const PORT = process.env.PORT || 3333;
@@ -16,19 +19,21 @@ app.use(express.static(path.resolve(__dirname, "..", "public")));
 app.use(cors({ origin: CORS_ORIGIN }));
 
 const server = new http.Server(app);
-// const io = require("socket.io")(server);
-import io from "socket.io";
 
 mongoose.connect(
   URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
-  () => {
+  (error: mongoose.Error): void => {
+    if (error) return console.log(`[index][MongoError] ${error.message}`);
     console.log("Conectado ao Mongo");
   }
 );
 
+const socketIo = io(server);
+socketIo.sockets.setMaxListeners(0);
+
 app.use((req: Request, res: Response, next: NextFunction) => {
-  req.io = io(server);
+  req.io = socketIo;
   next();
 });
 
@@ -45,12 +50,13 @@ app.use(
   })
 );
 
-server.listen(PORT, () => {
+server.listen(PORT, (): void => {
   console.log(
     `[index] Servidor rodando na porta ${PORT}\n[ENV] ${process.env.ENV}`
   );
 });
 
-app.get("*", (req, res) => {
+
+app.get("*", (req:Request, res:Response): void => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });
