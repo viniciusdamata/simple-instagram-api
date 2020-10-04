@@ -36,7 +36,7 @@ To contribute with this project create a pull request or an issue and i'l be gla
 - [x] convert all the api to TS
 - [x] create dev server nodemon like command
 - [x] remove tslint and change to eslint because tslint is deprecated
-- [ ] add websocket again
+- [x] add websocket again
 - [ ] implement [OvernightJS](https://github.com/seanpmaxwell/overnight) to use ts decorators
 - [ ] implement tests
 - [ ] configure module alias
@@ -45,7 +45,7 @@ To contribute with this project create a pull request or an issue and i'l be gla
 
 #### :blue_book:API Routes
 
-`POST localhost:3333/posts `
+`POST localhost:3333/api/posts `
 
 ```javascript
 var form = new FormData();
@@ -55,7 +55,7 @@ form.append("description", "Test");
 form.append("hashtags", "#test #test");
 form.append("image", "image binary here");
 
-fetch("http://localhost:3333/posts/", {
+fetch("http://localhost:3333/api/posts/", {
   method: "POST",
   headers: {
     "content-type": `multipart/form-data; boundary=${form._boundary}`,
@@ -69,10 +69,10 @@ fetch("http://localhost:3333/posts/", {
   });
 ```
 
-`GET localhost:3333/posts `
+`GET localhost:3333/api/posts `
 
 ```javascript
-fetch("http://localhost:3333/posts", {
+fetch("http://localhost:3333/api/posts", {
   method: "GET",
   headers: {
     "content-type": "application/json",
@@ -87,11 +87,11 @@ fetch("http://localhost:3333/posts", {
   });
 ```
 
-`PUT LIKE localhost:3333/posts/${id}/like`
+`PUT LIKE localhost:3333/api/posts/${id}/like`
 
 ```javascript
 const id = "id of the post here";
-fetch(`http://localhost:3333/posts/${id}/like`, {
+fetch(`http://localhost:3333/api/posts/${id}/like`, {
   method: "PUT",
   headers: {},
 })
