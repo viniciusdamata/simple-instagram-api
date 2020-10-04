@@ -11,5 +11,7 @@ module.exports = {
   rules: {
     "no-console": 0,
     "no-explicit-any": 0,
+    "@typescript-eslint/no-namespace": "off"
+
   },
 };
