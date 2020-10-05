@@ -1,9 +1,9 @@
-import Post, { PostModel } from "../models/Post";
-import  imageService from "../services/uploadImageService/index";
+import Post from "../models/Post";
+import imageService from "../services/uploadImageService/index";
 import { Request, Response } from "express";
 
 class PostController {
-  async index(req: Request, res: Response) {
+  async index(req: Request, res: Response): Promise<void> {
     try {
       const { query } = req;
       const posts = await Post.find({ ...query }).sort("-createdAt");
@@ -13,7 +13,7 @@ class PostController {
     }
   }
 
-  async store(req: Request, res: Response) {
+  async store(req: Request, res: Response): Promise<void> {
     try {
       const { author, place, description, hashtags } = req.body;
 
@@ -27,7 +27,7 @@ class PostController {
         image,
       });
 
-      // req.io.emit("post", post);
+      req.io.emit("post", post);
       res.status(201).json({ criado: post });
     } catch (err) {
       res.status(400).json({ error: err.message });
@@ -39,7 +39,7 @@ class PostController {
       const _id = req.params.id;
       const post = await Post.findOne({ _id });
       post.likes = post.likes += 1;
-      // req.io.emit("like", post);
+      req.io.emit("like", post);
       await Post.updateOne({ _id }, post);
       res.status(200).json({ liked: post });
     } catch (err) {

@@ -1,36 +1,41 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import http from "http";
 import path from "path";
+import io from "socket.io";
+
+import "./config/env.config";
 
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 const PORT = process.env.PORT || 3333;
 const URI = process.env.MONGO_DB_URI || "";
 
-import router from "./routes"
+import router from "./routes";
 const app = express();
 
 app.use(express.static(path.resolve(__dirname, "..", "public")));
 app.use(cors({ origin: CORS_ORIGIN }));
 
 const server = new http.Server(app);
-// const io = require("socket.io")(server);
-// import io from "socket.io"
 
 mongoose.connect(
   URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
-  () => {
+  (error: mongoose.Error): void => {
+    if (error) return console.log(`[index][MongoError] ${error.message}`);
     console.log("Conectado ao Mongo");
   }
 );
 
-// app.use((req:any, res, next) => {
-//   req.io = io(server);
-//   next();
-// });
+const socketIo = io(server);
+socketIo.sockets.setMaxListeners(0);
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  req.io = socketIo;
+  next();
+});
 
 app.use(
   "/files",
@@ -45,12 +50,13 @@ app.use(
   })
 );
 
-server.listen(PORT, () => {
+server.listen(PORT, (): void => {
   console.log(
     `[index] Servidor rodando na porta ${PORT}\n[ENV] ${process.env.ENV}`
   );
 });
 
-app.get("*", (req, res) => {
+
+app.get("*", (req:Request, res:Response): void => {
   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
 });

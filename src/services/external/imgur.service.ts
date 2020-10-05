@@ -8,6 +8,7 @@ import { AxiosResponse } from "axios";
  */
 
 class ImgurService {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async createImgurPost(image: Buffer): Promise<AxiosResponse<any>["data"]> {
     try {
       const form = new FormData();
@@ -21,6 +22,7 @@ class ImgurService {
       });
       return response.data;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(`[imgur.service] ${error.message}`);
     }
   }
