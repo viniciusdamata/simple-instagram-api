@@ -24,7 +24,7 @@ mongoose.connect(
   URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (error: mongoose.Error): void => {
-    if (error) return console.log(`[index][MongoError] ${error.message}`);
+    if (error) return console.log(`[MongoError] ${error.message}`);
     console.log("Conectado ao Mongo");
   }
 );
