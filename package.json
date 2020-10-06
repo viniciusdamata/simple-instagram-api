@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "yarn install typescript; yarn tsc",
+    "build": "yarn add typescript; yarn tsc",
     "prestart": "yarn build",
     "start": "node ./dist/index.js",
     "prebuild:local": "eslint . --ext .ts",
