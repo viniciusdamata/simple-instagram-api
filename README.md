@@ -2,8 +2,6 @@
 
 [Versao em pt-BR](./README_PT_BR.md)
 
-[Production version](http://instagrao.herokuapp.com/)
-
 [Frontend repository](https://github.com/viniciusdamata/simple-instagram-frontend.git)
 
 #### :pencil: Description
@@ -38,8 +36,8 @@ To contribute with this project create a pull request or an issue and i'l be gla
 - [x] remove tslint and change to eslint because tslint is deprecated
 - [x] add websocket again
 - [ ] implement [OvernightJS](https://github.com/seanpmaxwell/overnight) to use ts decorators
-- [ ] implement tests
 - [ ] configure module alias
+- [ ] implement tests
 
 
 

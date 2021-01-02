@@ -1,7 +1,5 @@
 # Api simples inspirada no Instagram
 
-[Versão em produção](http://instagrao.herokuapp.com/)
-
 [Repositório do frontend](https://github.com/viniciusdamata/simple-instagram-frontend.git)
 
 ####
