@@ -38,7 +38,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use(
-  "/files",
+  "/api/files",
   express.static(path.resolve(__dirname, "..", "uploads", "resized"))
 );
 
@@ -56,7 +56,6 @@ server.listen(PORT, (): void => {
   );
 });
 
-
-app.get("*", (req:Request, res:Response): void => {
-  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
+app.get("/", (req: Request, res: Response): void => {
+  res.json("Pagina Inicial");
 });

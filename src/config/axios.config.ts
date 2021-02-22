@@ -1,3 +1,4 @@
-import axios from "axios";
+import axios, {AxiosInstance} from "axios";
 
-export default axios.create({ baseURL: "https://api.imgur.com/3" });
+export {AxiosInstance};
+export default axios.create({ baseURL: process.env.IMGUR_URL });

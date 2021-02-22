@@ -8,10 +8,9 @@
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*"]
-    },
-    "typeRoots": ["./src/types", "node_modules/@types"]
+    "typeRoots": ["./src/@types"]
   },
+
   "include": ["src/**/*"],
+  "exclude": ["node_modules/**/*"]
 }

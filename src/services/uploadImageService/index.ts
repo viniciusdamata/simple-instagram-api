@@ -1,8 +1,9 @@
-import ImageService from "./image.service";
-import { sharpResizeImageService } from "./resizeImage.service";
-import { uploadImageImgurService } from "./uploadImage.service";
+import formData from "form-data";
+import api from "../../config/axios.config";
+import { ImageService } from "./image.service";
+import { ImgurProvider } from "./providers/imgur.provider";
+import { sharpProvider as sharpServiceProvider } from "./providers/sharp.provider";
 
-export default new ImageService(
-  sharpResizeImageService,
-  uploadImageImgurService
-);
+const imgurServiceProvider = new ImgurProvider(api, formData);
+
+export default new ImageService(sharpServiceProvider, imgurServiceProvider);
