@@ -10,6 +10,7 @@ import "./config/env.config";
 
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
 const PORT = process.env.PORT || 3333;
+const HOST = "0.0.0.0";
 const URI = process.env.MONGO_DB_URI || "";
 
 import router from "./routes";
@@ -50,7 +51,7 @@ app.use(
   })
 );
 
-server.listen(PORT, (): void => {
+server.listen(PORT as number, HOST, null, (): void => {
   console.log(
     `[index] Servidor rodando na porta ${PORT}\n[ENV] ${process.env.ENV}`
   );
