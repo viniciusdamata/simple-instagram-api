@@ -6,7 +6,18 @@ class PostController {
   async index(req: Request, res: Response): Promise<void> {
     try {
       const { query } = req;
-      const posts = await Post.find({ ...query }).sort("-createdAt");
+      const { page, pageSize } = query;
+      console.log(
+        (parseInt(page as string) - 1) * parseInt(pageSize as string)
+      );
+      console.log(parseInt(pageSize as string));
+      const posts = await Post.find({ ...query })
+        .sort("-createdAt")
+        .skip((parseInt(page as string) - 1) * parseInt(pageSize as string))
+        .limit(parseInt(pageSize as string));
+
+      // .skip((parseInt(pagina) - 1) * parseInt(limite))
+      // .limit(parseInt(limite));
       res.status(200).json(posts);
     } catch (err) {
       res.status(404).json({ error: err.message });

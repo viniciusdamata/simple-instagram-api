@@ -1,16 +1,12 @@
 import { IUploadImage } from "./interfaces/uploadImage";
 import { IResizeImage } from "./interfaces/resizeImage";
+import { IImgurResponse } from "src/interfaces/ImgurResponse";
 
 export class ImageService {
-  resizeImageService: IResizeImage;
-  uploadImageService: IUploadImage<any>;
   constructor(
-    resizeImageService: IResizeImage,
-    uploadImageService: IUploadImage<any>
-  ) {
-    this.resizeImageService = resizeImageService;
-    this.uploadImageService = uploadImageService;
-  }
+    private resizeImageService: IResizeImage,
+    private uploadImageService: IUploadImage<IImgurResponse>
+  ) {}
 
   async resizeImageAndUpload(file: Express.Multer.File): Promise<string> {
     try {

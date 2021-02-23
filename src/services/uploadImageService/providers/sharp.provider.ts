@@ -1,7 +1,7 @@
 import { MulterFileInterface } from "../../../interfaces/MulterFileInterface";
 import { IResizeImage } from "../interfaces/resizeImage";
 import sharp from "sharp";
-import { IMAGES_PATH } from "../../../config/settings";
+import { IMAGES_PATH } from "../../../config";
 import fs from "fs/promises";
 
 class SharpProvider implements IResizeImage {
