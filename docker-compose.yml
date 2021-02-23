@@ -3,7 +3,9 @@ version: '3'
 
 services: 
   instagram-api:
-    build: ./Docker
+    build: 
+      context: .
+      dockerfile: ./docker/Dockerfile
     ports:
       - "3333:3333"
     volumes:
