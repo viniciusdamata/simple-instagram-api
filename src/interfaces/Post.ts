@@ -1,4 +1,4 @@
-export interface PostInterface {
+export interface IPost {
     author: string,
     place: string,
     description: string,

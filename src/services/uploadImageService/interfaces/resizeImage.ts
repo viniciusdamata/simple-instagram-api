@@ -1,6 +1,6 @@
-import { MulterFileInterface } from "../../../interfaces/MulterFileInterface";
+import { IMulterFile } from "../../../interfaces/IMulterFile";
 
 export interface IResizeImage {
-  resizeImageToFile(file: MulterFileInterface): Promise<string>;
+  resizeImageToFile(file: IMulterFile): Promise<string>;
   resizeImageToBuffer(file: Buffer): Promise<Buffer>;
 }
