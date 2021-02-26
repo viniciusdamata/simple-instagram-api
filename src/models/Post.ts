@@ -1,7 +1,7 @@
 import { Document, Schema, model } from "mongoose";
 import { IPost } from "../interfaces/Post";
 
-export interface PostModel extends IPost, Document {}
+export type PostModel = Document<IPost>
 
 const postSchema = new Schema<PostModel>(
   {

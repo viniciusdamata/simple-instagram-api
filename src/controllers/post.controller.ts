@@ -1,25 +1,26 @@
 import Post from "../models/Post";
 import imageService from "../services/uploadImageService/index";
 import { Request, Response } from "express";
+import { PostService } from "../services/post.service";
+import { PostRepository } from "../repositories/post.repository";
+import {validator as postValidator} from "../validators/Post/create";
 
-class PostController {
+export class PostController {
+  constructor(
+    private postService: PostService,
+    private postRepository: PostRepository
+  ) {}
   async index(req: Request, res: Response): Promise<void> {
     try {
       const { query } = req;
       const { pageSize, page, ...searchQuery } = query;
 
-      const skip =
-        (parseInt(page as string) - 1) * parseInt(pageSize as string);
-      const limit = parseInt(pageSize as string);
+      const data = await this.postService.list(searchQuery, {
+        page: parseInt(page as string),
+        pageSize: parseInt(pageSize as string),
+      });
 
-      const posts = await Post.find({ ...searchQuery })
-        .sort("-createdAt")
-        .skip(skip)
-        .limit(limit);
-        
-      const total = await Post.count();
-
-      res.status(200).json({ data: posts, filters: { pageSize, page, total } });
+      res.status(200).json(data);
     } catch (err) {
       res.status(404).json({ error: err.message });
     }
@@ -27,37 +28,29 @@ class PostController {
 
   async store(req: Request, res: Response): Promise<void> {
     try {
-      const { author, place, description, hashtags } = req.body;
 
+      const data  = await postValidator.validate({ ...req.body, image: req.file });
       const image = await imageService.resizeImageAndUpload(req.file);
 
-      const post = await Post.create({
-        author,
-        place,
-        description,
-        hashtags,
-        image,
-      });
+      const post = await Post.create({...data, image});
 
       req.io.emit("post", post);
-      res.status(201).json({ criado: post });
+      res.status(201).json({ data: post });
     } catch (err) {
       res.status(400).json({ error: err.message });
     }
   }
 
-  async like(req: Request, res: Response): Promise<void> {
-    try {
-      const _id = req.params.id;
-      const post = await Post.findOne({ _id });
-      post.likes = post.likes += 1;
-      req.io.emit("like", post);
-      await Post.updateOne({ _id }, post);
-      res.status(200).json({ liked: post });
-    } catch (err) {
-      res.status(404).json(err.message);
-    }
-  }
+  // async like(req: Request, res: Response): Promise<void> {
+  //   try {
+  //     const _id = req.params.id;
+  //     const post = await Post.findOne({ _id });
+  //     post.likes = post.likes += 1;
+  //     req.io.emit("like", post);
+  //     await Post.updateOne({ _id }, post);
+  //     res.status(200).json({ liked: post });
+  //   } catch (err) {
+  //     res.status(404).json(err.message);
+  //   }
+  // }
 }
-
-export default new PostController();

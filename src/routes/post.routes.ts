@@ -1,6 +1,5 @@
 import { Router } from "express";
-import postController from "../controllers/post.controller";
-const { index, store, like } = postController;
+import postController from "../controllers";
 import uploadLocal from "../config/upload.config.local";
 
 const postRoute = Router();
@@ -8,9 +7,9 @@ const postRoute = Router();
 postRoute.post(
   "/posts",
   uploadLocal.single("image"),
-  store
+  postController.store.bind(postController)
 );
-postRoute.get("/posts", index);
-postRoute.put("/posts/:id/like", like);
+postRoute.get("/posts", postController.index.bind(postController));
+// postRoute.put("/posts/:id/like", postController.like);
 
 export default postRoute;

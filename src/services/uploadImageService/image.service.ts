@@ -1,6 +1,6 @@
 import { IUploadImage } from "./interfaces/uploadImage";
 import { IResizeImage } from "./interfaces/resizeImage";
-import { IImgurResponse } from "src/interfaces/ImgurResponse";
+import { IImgurResponse } from "../../interfaces/ImgurResponse";
 
 export class ImageService {
   constructor(
