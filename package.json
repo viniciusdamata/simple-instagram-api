@@ -10,8 +10,8 @@
     "prebuild:local": "eslint . --ext .ts",
     "build:local": "tsc",
     "prestart:local": "yarn build:local",
-    "start:local": "export NODE_ENV=prod; node ./dist/index.js",
-    "dev": "export NODE_ENV=dev; ts-node-dev --files  ./src/index.ts  --respawn --transpile-only  ",
+    "start:local": "node ./dist/index.js",
+    "dev": "ts-node-dev --files  ./src/index.ts  --respawn --transpile-only  ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -26,7 +26,8 @@
     "multer": "^1.4.2",
     "nodemon": "^1.19.1",
     "sharp": "^0.25.4",
-    "socket.io": "^2.2.0"
+    "socket.io": "^2.2.0",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@types/cors": "^2.8.7",

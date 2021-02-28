@@ -1,7 +1,7 @@
-import { MulterFileInterface } from "../../../interfaces/MulterFileInterface";
+import { IMulterFile } from "../../../interfaces/MulterFile";
 import { IResizeImage } from "../interfaces/resizeImage";
 import sharp from "sharp";
-import { IMAGES_PATH } from "../../../config/settings";
+import { IMAGES_PATH } from "../../../config";
 import fs from "fs/promises";
 
 class SharpProvider implements IResizeImage {
@@ -14,7 +14,7 @@ class SharpProvider implements IResizeImage {
     return imageResized;
   }
 
-  async resizeImageToFile(file: MulterFileInterface): Promise<string> {
+  async resizeImageToFile(file: IMulterFile): Promise<string> {
     const { buffer, originalname } = file;
     const [, ext] = originalname.split(".");
     const newFileName = `${Date.now()}.${ext}`

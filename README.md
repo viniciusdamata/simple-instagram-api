@@ -35,11 +35,8 @@ To contribute with this project create a pull request or an issue and i'l be gla
 - [x] create dev server nodemon like command
 - [x] remove tslint and change to eslint because tslint is deprecated
 - [x] add websocket again
-- [ ] implement [OvernightJS](https://github.com/seanpmaxwell/overnight) to use ts decorators
 - [ ] configure module alias
 - [ ] implement tests
-
-
 
 #### :blue_book:API Routes
 

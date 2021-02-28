@@ -1,20 +1,20 @@
-// import {ImgurService} from "../external/imgur.service";
-// import api from "../../config/axios.config"
 import FormData from "form-data";
 import { AxiosInstance } from "axios";
 import { IUploadImage } from "../interfaces/uploadImage";
+import { IImgurResponse } from "../../../interfaces/ImgurResponse";
+import { IMGUR_CLIENT_ID } from "../../../config";
 
-export class ImgurProvider implements IUploadImage<any> {
+export class ImgurProvider implements IUploadImage<IImgurResponse> {
   constructor(private api: AxiosInstance, private formData: typeof FormData) {}
 
-  async uploadImage(file: Buffer): Promise<any> {
+  async uploadImage(file: Buffer): Promise<IImgurResponse> {
     try {
       const form = new this.formData();
       form.append("image", file);
 
       const response = await this.api.post("/image", form, {
         headers: {
-          Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID}`,
+          Authorization: `Client-ID ${IMGUR_CLIENT_ID}`,
           ...form.getHeaders(),
         },
       });

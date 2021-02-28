@@ -1,5 +1,5 @@
 import { Router } from "express";
-import postRoute from "./post.routes";
+import postRoute from "./post";
 
 const router = Router();
 router.use("/api", postRoute);

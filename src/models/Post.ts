@@ -1,9 +1,10 @@
 import { Document, Schema, model } from "mongoose";
-import { PostInterface } from "../interfaces/PostInterface";
+import { API_URL } from "../config";
+import { IPost } from "../interfaces/Post";
 
-export interface PostModel extends PostInterface, Document {}
+export type Post = Document<IPost>
 
-const postSchema = new Schema<PostModel>(
+const postSchema = new Schema<Post>(
   {
     author: String,
     place: String,
@@ -20,14 +21,13 @@ const postSchema = new Schema<PostModel>(
     timestamps: true,
     toJSON: {
       transform: function (doc, ret) {
-        if (process.env.ENV === "DEV") {
-          const image = `${process.env.API_URL}/files/${ret.image}`;
+        if (ret.image && !ret.image.includes("https")) {
+          const image = `${API_URL}/files/${ret.image}`;
           return { ...ret, image };
         }
-        return ret;
       },
     },
   }
 );
 
-export default model<PostModel>("Post", postSchema);
+export default model<Post>("Post", postSchema);
