@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import { URI } from ".";
+import { DB_URI } from ".";
 
 export async function connect():Promise<void>{
     try {
         await mongoose.connect(
-          URI,
+          DB_URI,
           { useNewUrlParser: true, useUnifiedTopology: true }
         );
       } catch (error) {

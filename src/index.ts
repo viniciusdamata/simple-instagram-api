@@ -1,32 +1,25 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import http from "http";
 import path from "path";
-import io from "socket.io";
 
-import "./config/env.config";
+import "./config/env";
 import * as database from "./config/database";
 import router from "./routes";
-import { CORS_ORIGIN, HOST, PORT } from "./config";
+import { CORS_ORIGIN, ENV, HOST, PORT } from "./config";
+import { WebSocketMiddleware } from "./middlewares/websocket";
 
 async function bootstrap() {
   const app = express();
+  await database.connect();
 
   app.use(express.static(path.resolve(__dirname, "..", "public")));
   app.use(cors({ origin: CORS_ORIGIN }));
 
   const server = new http.Server(app);
-
-  await database.connect();
-
-  const socketIo = io(server);
-  socketIo.sockets.setMaxListeners(0);
-
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    req.io = socketIo;
-    next();
-  });
+  const webSocketMiddleware = new WebSocketMiddleware(server);
+  app.use(webSocketMiddleware.init());
 
   app.use(
     "/api/files",
@@ -42,15 +35,13 @@ async function bootstrap() {
   );
 
   server.listen(PORT as number, HOST, null, (): void => {
-    console.log(
-      `[index] Servidor rodando na porta ${PORT}\n[ENV] ${process.env.ENV}`
-    );
+    console.log(`[index] Servidor rodando na porta ${PORT}\n[ENV] ${ENV}`);
   });
 
   app.get("/", (req: Request, res: Response): void => {
     res.json("Pagina Inicial");
   });
-  
+
   process.on("unhandledRejection", (reason, promise) => {
     console.error(reason);
     console.log(promise);

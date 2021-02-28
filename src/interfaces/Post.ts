@@ -1,9 +1,9 @@
 export interface IPost {
-  id?: number;
+  _id?: string;
   author: string;
   place: string;
   description: string;
   hashtags: string;
-  image?: Express.Multer.File;
+  image?: string | Express.Multer.File;
   likes?: number;
 }

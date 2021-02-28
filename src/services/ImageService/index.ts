@@ -1,6 +1,6 @@
 import formData from "form-data";
-import api from "../../config/axios.config";
-import { ImageService } from "./image.service";
+import api from "../../config/axios";
+import { ImageService } from "./ImageService";
 import { ImgurProvider } from "./providers/imgur.provider";
 import { sharpProvider as sharpServiceProvider } from "./providers/sharp.provider";
 

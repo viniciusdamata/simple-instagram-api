@@ -1,4 +1,4 @@
-import { IPost } from "src/interfaces/Post";
+import { IPost } from "../../interfaces/Post";
 import * as yup from "yup";
 import { Validator } from "..";
 

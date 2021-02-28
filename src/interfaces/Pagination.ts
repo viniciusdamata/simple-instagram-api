@@ -1,9 +1,9 @@
 export interface IPaginationParams {
-  pageSize: number;
-  page: number;
+  pageSize: string;
+  page: string;
 }
 
 export interface IPaginatedData<T> {
   data: T[];
-  filters: { total: number; pageSize: number; page: number };
+  filters: { total: number; pageSize: string; page: string };
 }

@@ -1,6 +1,7 @@
 import { IUploadImage } from "./interfaces/uploadImage";
 import { IResizeImage } from "./interfaces/resizeImage";
 import { IImgurResponse } from "../../interfaces/ImgurResponse";
+import { UPLOAD_TYPE } from "../../config";
 
 export class ImageService {
   constructor(
@@ -11,8 +12,7 @@ export class ImageService {
   async resizeImageAndUpload(file: Express.Multer.File): Promise<string> {
     try {
       let image = "";
-
-      if (process.env.ENV === "PROD") {
+      if (UPLOAD_TYPE === "imgur") {
         const { buffer } = file;
         const resizedImage = await this.resizeImageService.resizeImageToBuffer(
           buffer
@@ -22,7 +22,7 @@ export class ImageService {
         );
         const link = imageCreatedImgur.data.link;
         image = link;
-      } else if (process.env.ENV === "DEV") {
+      } else if (UPLOAD_TYPE === "file") {
         const { originalname, buffer } = file;
         image = await this.resizeImageService.resizeImageToFile({
           originalname,
