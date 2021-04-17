@@ -1,6 +1,5 @@
 import { IPost } from "../../interfaces/Post";
 import * as yup from "yup";
-import { Validator } from "..";
 
 const schema = yup.object<IPost & { [key: string]: any }>().shape({
   author: yup.string().required(),
@@ -10,6 +9,6 @@ const schema = yup.object<IPost & { [key: string]: any }>().shape({
   image: yup.mixed().required(),
 });
 
-export const validator = new Validator<IPost>(schema)
-
-
+export function validate(data: IPost): Promise<IPost> {
+  return schema.validate(data);
+}

@@ -16,6 +16,7 @@ export class PostRepository {
     const limit = parseInt(paginationParams.pageSize);
 
     return await this.Post.find({ ...query })
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
   }

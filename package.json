@@ -12,7 +12,8 @@
     "prestart:local": "yarn build:local",
     "start:local": "node ./dist/index.js",
     "dev": "ts-node-dev --files  ./src/index.ts  --respawn --transpile-only  ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint":"yarn eslint \"./src/**/*.ts\""
   },
   "dependencies": {
     "@overnightjs/core": "^1.7.5",

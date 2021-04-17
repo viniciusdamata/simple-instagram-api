@@ -56,4 +56,4 @@ async function bootstrap() {
   });
 }
 
-bootstrap().catch(error => console.log("error", error));
+bootstrap().catch(error => console.error("[error]", error));

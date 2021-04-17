@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { PostService } from "../services/PostService";
 import { PostRepository } from "../repositories/PostRepository";
-import { validator as postValidator } from "../validators/Post/create";
-import { validator as postListValidator } from "../validators/Post/list";
+import { postValidator } from "../validators/Post";
 import { IPaginationParams } from "src/interfaces/Pagination";
 
 export class PostController {
@@ -13,11 +12,7 @@ export class PostController {
   async index(req: Request, res: Response): Promise<void> {
     try {
       const { query } = req;
-      const {
-        pageSize,
-        page,
-        ...searchQuery
-      } = await postListValidator.validate(
+      const { pageSize, page, ...searchQuery } = await postValidator.list(
         (query as unknown) as IPaginationParams
       );
 
@@ -34,7 +29,7 @@ export class PostController {
 
   async store(req: Request, res: Response): Promise<void> {
     try {
-      const data = await postValidator.validate({
+      const data = await postValidator.create({
         ...req.body,
         image: req.file,
       });

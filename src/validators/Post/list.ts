@@ -1,6 +1,5 @@
 import { IPaginationParams } from "../../interfaces/Pagination";
 import * as yup from "yup";
-import { Validator } from "..";
 import { IPost } from "src/interfaces/Post";
 
 const schema = yup
@@ -14,4 +13,6 @@ const schema = yup
     hashtags: yup.string().optional(),
   });
 
-export const validator = new Validator<IPaginationParams>(schema);
+export function validate(data: IPaginationParams): Promise<IPaginationParams> {
+  return schema.validate(data);
+}
