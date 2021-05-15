@@ -13,7 +13,8 @@
     "start:local": "node ./dist/index.js",
     "dev": "ts-node-dev --files  ./src/index.ts  --respawn --transpile-only  ",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint":"yarn eslint \"./src/**/*.ts\""
+    "lint": "yarn eslint --fix \"./src/**/*.ts\"",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@overnightjs/core": "^1.7.5",
@@ -42,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
     "eslint": "^7.10.0",
+    "husky": "^6.0.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.4.0",
     "ts-node-dev": "^1.0.0-pre.63",
