@@ -1,14 +1,13 @@
-import express, { Request, Response } from "express";
-import bodyParser from "body-parser";
 import cors from "cors";
+import express, { Request, Response } from "express";
 import http from "http";
 import path from "path";
-
-import "./config/env";
-import * as database from "./config/database";
-import router from "./routes";
 import { CORS_ORIGIN, ENV, HOST, PORT } from "./config";
+import * as database from "./config/database";
+import "./config/env";
 import { WebSocketMiddleware } from "./middlewares/websocket";
+import router from "./routes";
+
 
 async function bootstrap() {
   const app = express();
@@ -27,9 +26,9 @@ async function bootstrap() {
   );
 
   app.use(router);
-  app.use(bodyParser.json());
+  app.use(express.json());
   app.use(
-    bodyParser.urlencoded({
+    express.urlencoded({
       extended: true,
     })
   );
