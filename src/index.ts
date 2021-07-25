@@ -2,12 +2,13 @@ import cors from "cors";
 import express, { Request, Response } from "express";
 import http from "http";
 import path from "path";
+import swaggerUi from "swagger-ui-express";
 import { CORS_ORIGIN, ENV, HOST, PORT } from "./config";
 import * as database from "./config/database";
 import "./config/env";
 import { WebSocketMiddleware } from "./middlewares/websocket";
 import router from "./routes";
-
+import swagger from "./swagger.json";
 
 async function bootstrap() {
   const app = express();
@@ -24,6 +25,7 @@ async function bootstrap() {
     "/api/files",
     express.static(path.resolve(__dirname, "..", "uploads", "resized"))
   );
+  app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swagger));
 
   app.use(router);
   app.use(express.json());
