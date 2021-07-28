@@ -1,11 +1,11 @@
-FROM amd64/node:14.15.0
+FROM amd64/node:14-slim
 
 WORKDIR /usr/app
 
 COPY package.json ./
 COPY yarn.lock ./
 
-RUN yarn 
+RUN yarn
 
 COPY . .
 
