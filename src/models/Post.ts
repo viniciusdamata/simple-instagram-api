@@ -1,5 +1,5 @@
 import { Document, Schema, model } from "mongoose";
-import { API_URL } from "../config";
+import { API_URL } from "../config/env";
 import { IPost } from "../interfaces/Post";
 
 export type Post = Document<IPost>

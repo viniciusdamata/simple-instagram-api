@@ -7,10 +7,6 @@
     "build": "tsc",
     "prestart": "yarn build",
     "start": "node ./dist/index.js",
-    "prebuild:local": "eslint . --ext .ts",
-    "build:local": "tsc",
-    "prestart:local": "yarn build:local",
-    "start:local": "node ./dist/index.js",
     "dev": "ts-node-dev --files  ./src/index.ts  --respawn --transpile-only  ",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "yarn eslint ./src/**/*.ts"

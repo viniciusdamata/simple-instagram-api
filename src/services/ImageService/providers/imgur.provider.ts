@@ -2,7 +2,7 @@ import FormData from "form-data";
 import { AxiosInstance } from "axios";
 import { IUploadImage } from "../interfaces/uploadImage";
 import { IImgurResponse } from "../../../interfaces/ImgurResponse";
-import { IMGUR_CLIENT_ID } from "../../../config";
+import { IMGUR_CLIENT_ID } from "../../../config/env";
 
 export class ImgurProvider implements IUploadImage<IImgurResponse> {
   constructor(private api: AxiosInstance, private formData: typeof FormData) {}

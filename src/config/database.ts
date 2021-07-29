@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { DB_URI } from ".";
+import { DB_URI } from "./env";
 
 export async function connect():Promise<void>{
     try {

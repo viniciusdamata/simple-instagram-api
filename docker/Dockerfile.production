@@ -1,0 +1,16 @@
+FROM amd64/node:14-slim
+
+WORKDIR /usr/app
+
+COPY package.json ./
+COPY yarn.lock ./
+
+RUN yarn
+
+COPY . .
+
+RUN yarn build
+
+EXPOSE 3333
+
+CMD ["yarn","run", "start"]

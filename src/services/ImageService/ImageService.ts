@@ -1,7 +1,7 @@
 import { IUploadImage } from "./interfaces/uploadImage";
 import { IResizeImage } from "./interfaces/resizeImage";
 import { IImgurResponse } from "../../interfaces/ImgurResponse";
-import { UPLOAD_TYPE } from "../../config";
+import { UPLOAD_TYPE } from "../../config/env";
 
 export class ImageService {
   constructor(
