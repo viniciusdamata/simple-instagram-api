@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { PostService } from "../services/PostService";
-import { PostRepository } from "../repositories/PostRepository";
-import { validator as postValidator } from "../validators/Post/create";
-import { validator as postListValidator } from "../validators/Post/list";
 import { IPaginationParams } from "src/interfaces/Pagination";
+import { PostRepository } from "../repositories/PostRepository";
+import { PostService } from "../services/PostService";
+import postCreateValidator from "../validators/Post/create";
+import postListValidator from "../validators/Post/list";
 
 export class PostController {
   constructor(
@@ -34,7 +34,7 @@ export class PostController {
 
   async store(req: Request, res: Response): Promise<void> {
     try {
-      const data = await postValidator.validate({
+      const data = await postCreateValidator.validate({
         ...req.body,
         image: req.file,
       });
